@@ -1,30 +1,23 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh lpr fFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        />
-
-        <q-toolbar-title> Todo </q-toolbar-title>
+        <q-toolbar-title class="absolute-center">Vue Todo </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
+      :breakpoint="767"
       bordered
-      content-class="bg-grey-1"
+      :width="250"
+      content-class="bg-primary"
     >
-      <q-item-label class="q-pa-md">Navigation</q-item-label>
       <q-list>
         <q-item
           clickable
+          class="text-black q-pt-lg"
           v-for="nav in navs"
           :key="nav.label"
           :to="nav.to"
@@ -45,13 +38,15 @@
       <router-view />
     </q-page-container>
     <q-footer>
-      <q-tabs class="text-white">
+      <q-tabs class="text-black">
         <q-route-tab
           v-for="nav in navs"
           :key="nav.label"
           :icon="nav.icon"
           :label="nav.label"
           :to="nav.to"
+          active-class="text-white"
+          exact
         />
       </q-tabs>
     </q-footer>
@@ -80,3 +75,13 @@ export default {
   },
 };
 </script>
+<style lang='scss' >
+@media screen and (min-width: 768px) {
+  .q-footer {
+    display: none;
+  }
+  .q-drawer .q-router-link--exact-active {
+    color: rgb(255, 255, 255) !important;
+  }
+}
+</style>
