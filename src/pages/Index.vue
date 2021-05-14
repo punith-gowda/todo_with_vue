@@ -1,41 +1,32 @@
 <template>
   <q-page class="q-pa-md">
-    <q-list separator bordered>
-      <q-item
-        v-for="(task, key) in tasks"
-        clickable
-        :key="key"
-        :class="!task.completed ? 'bg-orange-2' : 'bg-green-2'"
-        @click="task.completed == !task.completed"
-        tag="label"
-        v-ripple
+    <div v-if="Object.keys(tasks).length">
+      <q-list separator bordered>
+        <task
+          v-for="(task, key) in tasks"
+          :key="key"
+          :task="task"
+          :id="key"
+        ></task>
+      </q-list>
+    </div>
+    <div v-else>
+      <p class="text-center text-h4">No Tasks Yet</p>
+    </div>
+    <div class="absolute-bottom q-pb-md text-center">
+      <q-btn
+        @click="addtodo = !addtodo"
+        color="primary"
+        round
+        icon="add"
+        size="24px"
       >
-        <q-item-section side top>
-          <q-checkbox v-model="task.completed" />
-        </q-item-section>
+      </q-btn>
+    </div>
 
-        <q-item-section>
-          <q-item-label :class="{ 'text-strike': task.completed }">{{
-            task.name
-          }}</q-item-label>
-        </q-item-section>
-        <q-item-section side>
-          <div class="row">
-            <div class="column justify-center q-pr-sm">
-              <q-icon name="event" size="18px" />
-            </div>
-            <div class="col">
-              <q-item-label class="row justify-end" caption>{{
-                task.duedate
-              }}</q-item-label>
-              <q-item-label class="row justify-end" caption
-                ><small>{{ task.duetime }}</small></q-item-label
-              >
-            </div>
-          </div>
-        </q-item-section>
-      </q-item>
-    </q-list>
+    <q-dialog v-model="addtodo" persistent>
+      <addtask @close="addtodo = false" />
+    </q-dialog>
   </q-page>
 </template>
 
@@ -44,6 +35,15 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters("tasks", ["tasks"]),
+  },
+  components: {
+    task: require("components/task.vue").default,
+    addtask: require("components/addtodotask.vue").default,
+  },
+  data() {
+    return {
+      addtodo: false,
+    };
   },
 };
 </script>

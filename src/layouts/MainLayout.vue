@@ -38,7 +38,7 @@
       <router-view />
     </q-page-container>
     <q-footer>
-      <q-tabs class="text-black">
+      <q-tabs class="text-black space-between">
         <q-route-tab
           v-for="nav in navs"
           :key="nav.label"
@@ -76,12 +76,18 @@ export default {
 };
 </script>
 <style lang='scss' >
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 765px) {
   .q-footer {
     display: none;
   }
   .q-drawer .q-router-link--exact-active {
     color: rgb(255, 255, 255) !important;
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .q-drawer {
+    display: none;
   }
 }
 </style>
