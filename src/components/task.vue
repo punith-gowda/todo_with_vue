@@ -38,18 +38,31 @@
       </div>
     </q-item-section>
     <q-item-section side>
-      <q-btn
-        round
-        unelevated
-        @click.stop="confirm = !confirm"
-        dense
-        text-color="red-11"
-        icon="delete"
-      />
-      <q-dialog v-model="confirm" persistent>
+      <div class="row">
+        <q-btn
+          round
+          unelevated
+          @click.stop="confirmedit = !confirmedit"
+          dense
+          text-color="blue-11"
+          icon="edit"
+        />
+        <q-btn
+          round
+          unelevated
+          @click.stop="confirmdelete = !confirmdelete"
+          dense
+          text-color="red-11"
+          icon="delete"
+        />
+      </div>
+      <q-dialog v-model="confirmedit" persistent>
+        <edittask :task="task" :id="id" @close="confirmedit = false" />
+      </q-dialog>
+      <q-dialog v-model="confirmdelete" persistent>
         <q-card style="width: 300px">
           <q-card-section>
-            <div class="text-h6">Confirm</div>
+            <div class="text-h6">confirmdelete</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -70,12 +83,17 @@
 import { mapActions } from "vuex";
 export default {
   props: ["task", "id"],
+  components: {
+    addtask: require("components/addtodotask.vue").default,
+    edittask: require("components/edittask.vue").default,
+  },
   methods: {
     ...mapActions("tasks", ["updatetask", "deletetask"]),
   },
   data() {
     return {
-      confirm: false,
+      confirmdelete: false,
+      confirmedit: false,
     };
   },
 };

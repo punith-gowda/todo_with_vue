@@ -1,22 +1,17 @@
 <template>
   <q-card>
-    <modalheader> Add Task</modalheader>
+    <modalheader> Edit Task</modalheader>
     <q-form @submit="submitform">
       <q-card-section class="q-pb-none q-pt-lg">
         <modaltask :name.sync="tasktoadd.name"> </modaltask>
       </q-card-section>
       <q-card-section>
-        <modaldate
-          v-if="tasktoadd.name.length"
-          :duedate.sync="tasktoadd.duedate"
-        />
+        <modaldate :duedate.sync="tasktoadd.duedate" />
       </q-card-section>
       <q-card-section>
-        <modaltime
-          v-if="tasktoadd.duedate.length"
-          :duetime.sync="tasktoadd.duetime"
-        />
+        <modaltime :duetime.sync="tasktoadd.duetime" />
       </q-card-section>
+
       <q-card-actions align="right">
         <modalbuttons></modalbuttons>
       </q-card-actions>
@@ -27,21 +22,19 @@
 <script>
 import { mapActions } from "vuex";
 export default {
+  props: ["task", "id"],
   data() {
     return {
-      tasktoadd: {
-        name: "",
-        duedate: "",
-        duetime: "",
-        completed: "",
-        completed: false,
-      },
+      tasktoadd: {},
     };
   },
   methods: {
-    ...mapActions("tasks", ["addtask"]),
+    ...mapActions("tasks", ["updatetask"]),
     submitform() {
-      this.addtask(this.tasktoadd);
+      this.updatetask({
+        id: this.id,
+        updates: this.tasktoadd,
+      });
       this.$emit("close");
     },
   },
@@ -52,6 +45,9 @@ export default {
     modaldate: require("src/components/add&edit/taskdate.vue").default,
     modaltime: require("src/components/add&edit/tasktime.vue").default,
     modalbuttons: require("src/components/add&edit/buttons.vue").default,
+  },
+  mounted() {
+    this.tasktoadd = Object.assign({}, this.task);
   },
 };
 </script>
