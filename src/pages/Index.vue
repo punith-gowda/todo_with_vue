@@ -1,17 +1,24 @@
 <template>
-  <q-page class="q-pa-md">
-    <div v-if="Object.keys(tasks).length">
-      <q-list separator bordered>
-        <task
-          v-for="(task, key) in tasks"
-          :key="key"
-          :task="task"
-          :id="key"
-        ></task>
-      </q-list>
-    </div>
-    <div v-else>
-      <p class="text-center text-h4">No Tasks Yet</p>
+  <q-page class="q-pa-md bg-grey-4">
+    <div>
+      <div>
+        <tasktodoes
+          v-if="Object.keys(taskstodo).length"
+          :taskstodos="taskstodo"
+        />
+        <p v-else class="text-center text-bold text-orange-6 text-h4 q-mt-lg">
+          Hurray! All Tasks Completed
+        </p>
+      </div>
+      <div>
+        <taskscompleted
+          v-if="Object.keys(taskscompleted).length"
+          :taskscompleted="taskscompleted"
+        />
+        <p v-else class="text-center text-bold text-red-6 text-h4 q-mt-lg">
+          No Task is Completed Yet
+        </p>
+      </div>
     </div>
     <div class="absolute-bottom q-pb-md text-center">
       <q-btn
@@ -34,11 +41,12 @@
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters("tasks", ["tasks"]),
+    ...mapGetters("tasks", ["taskstodo", "taskscompleted"]),
   },
   components: {
-    task: require("components/task.vue").default,
     addtask: require("components/addtodotask.vue").default,
+    tasktodoes: require("components/tasktodo.vue").default,
+    taskscompleted: require("components/taskscompleted.vue").default,
   },
   data() {
     return {
