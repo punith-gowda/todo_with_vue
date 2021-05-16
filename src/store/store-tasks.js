@@ -3,14 +3,14 @@ import { uid } from 'quasar'
 const state = {
     tasks: {
         'ID1': {
-            name: 'got to go ',
+            name: 'got to go 1 ',
             completed: false,
             duedate: '2019/02/29',
             duetime: '10:00'
         },
         'ID2': {
             name: 'got to go 2',
-            completed: true,
+            completed: false,
             duedate: '2019/02/29',
             duetime: '11:00'
         },
@@ -20,7 +20,8 @@ const state = {
             duedate: '2019/02/29',
             duetime: '12:00'
         },
-    }
+    },
+    search: ''
 }
 
 
@@ -34,6 +35,9 @@ const mutations = {
     },
     addtask(state, payload) {
         Vue.set(state.tasks, payload.id, payload.task)
+    },
+    setsearch(state, search) {
+        state.search = search
     }
 }
 
@@ -51,31 +55,55 @@ const actions = {
             task: task,
         }
         commit('addtask', payload)
+    },
+    setsearch({ commit }, search) {
+        commit('setsearch', search)
     }
 
 }
 
 const getters = {
-    taskstodo: (state) => {
+    tasksorted: (state) => {
+        let Stasks = {}
+    },
+    tasksfiltered: (state) => {
+        let Ftasks = {}
+        if (state.search) {
+            Object.keys(state.tasks).forEach((keyid) => {
+                let task = state.tasks[keyid]
+                let tasknamelower = task.name.toLowerCase()
+                let searchlower = state.search.toLowerCase()
+                if (tasknamelower.includes(searchlower)) {
+                    Ftasks[keyid] = task
+                }
+            })
+            return Ftasks;
+        }
+        return state.tasks
+    },
+    taskstodo: (state, getters) => {
+        let Ftasks = getters.tasksfiltered
         let tasks = {}
-        Object.keys(state.tasks).forEach((keyid) => {
-            let task = state.tasks[keyid]
+        Object.keys(Ftasks).forEach((keyid) => {
+            let task = Ftasks[keyid]
             if (!task.completed) {
                 tasks[keyid] = task
             }
         })
         return tasks;
     },
-    taskscompleted: (state) => {
+    taskscompleted: (state, getters) => {
+        let Ftasks = getters.tasksfiltered
         let tasks = {}
-        Object.keys(state.tasks).forEach((keyid) => {
-            let task = state.tasks[keyid]
+        Object.keys(Ftasks).forEach((keyid) => {
+            let task = Ftasks[keyid]
             if (task.completed) {
                 tasks[keyid] = task
             }
         })
         return tasks;
-    }
+    },
+
 }
 
 export default {

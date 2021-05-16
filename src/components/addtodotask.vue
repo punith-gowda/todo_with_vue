@@ -3,7 +3,7 @@
     <modalheader> Add Task</modalheader>
     <q-form @submit="submitform">
       <q-card-section class="q-pb-none q-pt-lg">
-        <modaltask :name.sync="tasktoadd.name"> </modaltask>
+        <modaltask  :name.sync="tasktoadd.name"> </modaltask>
       </q-card-section>
       <q-card-section>
         <modaldate

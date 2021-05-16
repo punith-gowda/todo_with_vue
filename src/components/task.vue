@@ -62,7 +62,7 @@
       <q-dialog v-model="confirmdelete" persistent>
         <q-card style="width: 300px">
           <q-card-section>
-            <div class="text-h6">confirmdelete</div>
+            <div class="text-h6">Confirm Delete</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
