@@ -3,6 +3,7 @@
     <div>
       <div class="row q-mb-lg">
         <search />
+        <sort />
       </div>
       <p
         v-if="
@@ -78,6 +79,7 @@ export default {
     tasktodoes: require("components/tasktodo.vue").default,
     taskscompleted: require("components/taskscompleted.vue").default,
     search: require("components/search.vue").default,
+    sort: require("components/sort.vue").default,
   },
   data() {
     return {

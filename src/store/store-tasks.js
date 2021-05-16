@@ -3,25 +3,26 @@ import { uid } from 'quasar'
 const state = {
     tasks: {
         'ID1': {
-            name: 'got to go 1 ',
+            name: 'go to shop ',
             completed: false,
-            duedate: '2019/02/29',
+            duedate: '2019/03/29',
             duetime: '10:00'
         },
         'ID2': {
-            name: 'got to go 2',
+            name: 'get bannas',
             completed: false,
-            duedate: '2019/02/29',
+            duedate: '2019/04/29',
             duetime: '11:00'
         },
         'ID3': {
-            name: 'got to go 3',
+            name: 'get Applies',
             completed: false,
-            duedate: '2019/02/29',
+            duedate: '2019/06/29',
             duetime: '12:00'
         },
     },
-    search: ''
+    search: '',
+    sort: 'duedate'
 }
 
 
@@ -38,6 +39,9 @@ const mutations = {
     },
     setsearch(state, search) {
         state.search = search
+    },
+    searchfilter(state, sort) {
+        state.sort = sort
     }
 }
 
@@ -58,19 +62,42 @@ const actions = {
     },
     setsearch({ commit }, search) {
         commit('setsearch', search)
+    },
+    searchfilter({ commit }, filter) {
+        commit('searchfilter', filter)
     }
-
 }
 
 const getters = {
     tasksorted: (state) => {
         let Stasks = {}
+        let keyordered = Object.keys(state.tasks)
+        keyordered.sort((a, b) => {
+
+            let taskAprop = state.tasks[a][state.sort].toLowerCase(),
+                taskBprop = state.tasks[b][state.sort].toLowerCase();
+            if (taskAprop > taskBprop) {
+                return 1;
+            }
+            else if (taskAprop < taskBprop) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        })
+        keyordered.forEach((key) => {
+            Stasks[key] = state.tasks[key];
+        })
+
+        return Stasks;
     },
-    tasksfiltered: (state) => {
+    tasksfiltered: (state, getters) => {
+        let Stasks = getters.tasksorted
         let Ftasks = {}
         if (state.search) {
-            Object.keys(state.tasks).forEach((keyid) => {
-                let task = state.tasks[keyid]
+            Object.keys(Stasks).forEach((keyid) => {
+                let task = Stasks[keyid]
                 let tasknamelower = task.name.toLowerCase()
                 let searchlower = state.search.toLowerCase()
                 if (tasknamelower.includes(searchlower)) {
@@ -79,7 +106,7 @@ const getters = {
             })
             return Ftasks;
         }
-        return state.tasks
+        return Stasks
     },
     taskstodo: (state, getters) => {
         let Ftasks = getters.tasksfiltered
