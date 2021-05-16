@@ -2,6 +2,7 @@
   <q-input
     filled
     autofocus
+    v-select-all
     :value="name"
     @input="$emit('update:name', $event)"
     label="Task Name"
@@ -21,6 +22,19 @@
 <script>
 export default {
   props: ["name"],
+  directives: {
+    selectAll: {
+      bind(el) {
+        let input = el.querySelector(".q-field__native");
+        console.log(input);
+        input.addEventListener("focus", () => {
+          if (input.value.length) {
+            input.select();
+          }
+        });
+      },
+    },
+  },
 };
 </script>
 

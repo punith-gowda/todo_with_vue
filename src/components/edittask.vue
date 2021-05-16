@@ -46,7 +46,7 @@ export default {
     modaltime: require("src/components/add&edit/tasktime.vue").default,
     modalbuttons: require("src/components/add&edit/buttons.vue").default,
   },
-  mounted() {
+  created() {
     this.tasktoadd = Object.assign({}, this.task);
   },
 };
