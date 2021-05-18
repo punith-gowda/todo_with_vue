@@ -16,7 +16,7 @@
         Not Found
       </p>
 
-      <q-scroll-area style="height: 100%">
+      <q-scroll-area style="height: 90%">
         <transition
           appear
           enter-active-class="animated zoomIn"
@@ -94,8 +94,4 @@ export default {
 };
 </script>
 <style>
-.scroll-area-tasks {
-  display: flex;
-  flex-grow: 1;
-}
 </style> 
