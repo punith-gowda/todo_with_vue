@@ -15,27 +15,34 @@
       >
         Not Found
       </p>
-      <div>
-        <q-banner
-          v-if="!Object.keys(taskstodo).length && !search"
-          class="bg-grey-3"
+      <div class="relative-position">
+        <transition
+          appear
+          enter-active-class="animated zoomIn"
+          leave-active-class="animated absolute-top zoomOut"
         >
-          <p class="text-center text-bold text-orange-6 text-h5 q-mt-lg">
-            Hurray! All Tasks Completed
-            <q-icon size="40px" name="thumb_up_alt" color="primary" />
-          </p>
-          <template v-slot:action>
-            <q-btn
-              color="orange-6"
-              @click="addtodo = !addtodo"
-              label="Add Task"
-            />
-          </template>
-        </q-banner>
-        <tasktodoes
-          v-if="Object.keys(taskstodo).length"
-          :taskstodos="taskstodo"
-        />
+          <q-banner
+            v-if="!Object.keys(taskstodo).length && !search"
+            class="bg-cyan-2"
+          >
+            <p class="text-center text-bold text-orange-6 text-h5 q-mt-lg">
+              <q-icon size="30px" name="celebration" color="red" />
+              Hurray! All Tasks Completed
+              <q-icon size="30px" name="celebration" color="red" />
+            </p>
+            <template v-slot:action>
+              <q-btn
+                color="orange-6"
+                @click="addtodo = !addtodo"
+                label="Add Task"
+              />
+            </template>
+          </q-banner>
+          <tasktodoes
+            v-if="Object.keys(taskstodo).length"
+            :taskstodos="taskstodo"
+          />
+        </transition>
       </div>
       <div>
         <p
