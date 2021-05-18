@@ -3,7 +3,7 @@
     <div>
       <div class="row q-mb-lg">
         <search />
-        <sort />
+        <sort class="q-ml-md" />
       </div>
       <p
         v-if="

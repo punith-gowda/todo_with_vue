@@ -2,6 +2,7 @@
   <q-item
     clickable
     :class="!task.completed ? 'bg-orange-2' : 'bg-green-2'"
+    v-touch-hold:1000.mouse="showeditTask"
     @click="
       updatetask({
         id: id,
@@ -18,9 +19,10 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label :class="{ 'text-strike': task.completed }">{{
-        task.name
-      }}</q-item-label>
+      <q-item-label
+        v-html="$options.filters.searchhighlight(task.name, search)"
+        :class="{ 'text-strike': task.completed }"
+      ></q-item-label>
     </q-item-section>
     <q-item-section side>
       <div class="row">
@@ -29,7 +31,7 @@
         </div>
         <div class="col">
           <q-item-label class="row justify-end" caption>{{
-            task.duedate
+            task.duedate | formattedDate
           }}</q-item-label>
           <q-item-label class="row justify-end" caption
             ><small>{{ task.duetime }}</small></q-item-label
@@ -81,14 +83,36 @@
 
 <script>
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
+import { date } from "quasar";
 export default {
   props: ["task", "id"],
   components: {
     addtask: require("components/addtodotask.vue").default,
     edittask: require("components/edittask.vue").default,
   },
+  computed: {
+    ...mapState("tasks", ["search"]),
+  },
   methods: {
     ...mapActions("tasks", ["updatetask", "deletetask"]),
+    showeditTask() {
+      this.confirmedit = true;
+    },
+  },
+  filters: {
+    formattedDate(value) {
+      return date.formatDate(value, "Do MMM");
+    },
+    searchhighlight(value, search) {
+      if (search) {
+        let searchreg = new RegExp(search, "ig");
+        return value.replace(searchreg, (match) => {
+          return '<span class="bg-blue-2">' + match + "</span>";
+        });
+      }
+      return value;
+    },
   },
   data() {
     return {

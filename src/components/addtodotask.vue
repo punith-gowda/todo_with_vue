@@ -3,7 +3,7 @@
     <modalheader> Add Task</modalheader>
     <q-form @submit="submitform">
       <q-card-section class="q-pb-none q-pt-lg">
-        <modaltask  :name.sync="tasktoadd.name"> </modaltask>
+        <modaltask :name.sync="tasktoadd.name"> </modaltask>
       </q-card-section>
       <q-card-section>
         <modaldate
@@ -26,7 +26,10 @@
 
 <script>
 import { mapActions } from "vuex";
+
+import mixinaddedit from "src/mixins/add-edit";
 export default {
+  mixins: [mixinaddedit],
   data() {
     return {
       tasktoadd: {
@@ -44,14 +47,6 @@ export default {
       this.addtask(this.tasktoadd);
       this.$emit("close");
     },
-  },
-
-  components: {
-    modalheader: require("components/add&edit/modalHeader.vue").default,
-    modaltask: require("src/components/add&edit/taskname.vue").default,
-    modaldate: require("src/components/add&edit/taskdate.vue").default,
-    modaltime: require("src/components/add&edit/tasktime.vue").default,
-    modalbuttons: require("src/components/add&edit/buttons.vue").default,
   },
 };
 </script>

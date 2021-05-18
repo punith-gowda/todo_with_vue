@@ -3,6 +3,8 @@
     class="col"
     outlined
     v-model="searchfield"
+    @keyup.esc="searchfield = ''"
+    v-select-all
     placeholder="Search"
     maxlength="12"
   >
@@ -20,6 +22,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { selectAll } from "src/directives/directive-select-all";
 import { mapActions } from "vuex";
 
 export default {
@@ -33,6 +36,9 @@ export default {
         this.setsearch(value);
       },
     },
+  },
+  directives: {
+    selectAll,
   },
   methods: {
     ...mapActions("tasks", ["setsearch"]),
