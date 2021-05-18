@@ -1,6 +1,6 @@
 <template>
-  <q-page class="q-pa-md bg-grey-4">
-    <div>
+  <q-page>
+    <div class="q-pa-md absolute full-width full-height">
       <div class="row q-mb-lg">
         <search />
         <sort class="q-ml-md" />
@@ -15,7 +15,8 @@
       >
         Not Found
       </p>
-      <div class="relative-position">
+
+      <q-scroll-area style="height: 100%">
         <transition
           appear
           enter-active-class="animated zoomIn"
@@ -43,31 +44,28 @@
             :taskstodos="taskstodo"
           />
         </transition>
-      </div>
-      <div>
-        <p
-          v-if="!Object.keys(taskscompleted).length && !search"
-          class="text-center text-bold text-red-6 text-h4 q-mt-lg"
-        >
-          No Task is Completed Yet
-        </p>
-        <taskscompleted
-          v-if="Object.keys(taskscompleted).length"
-          :taskscompleted="taskscompleted"
-        />
-      </div>
-    </div>
-    <div class="absolute-bottom q-pb-md text-center">
-      <q-btn
-        @click="addtodo = !addtodo"
-        color="primary"
-        round
-        icon="add"
-        size="24px"
-      >
-      </q-btn>
-    </div>
 
+        <div class="q-mb-xl">
+          <taskscompleted
+            v-if="Object.keys(taskscompleted).length"
+            :taskscompleted="taskscompleted"
+          />
+          <div class="q-pb-xl"></div>
+        </div>
+      </q-scroll-area>
+
+      <div class="absolute-bottom q-pb-md text-center no-pointer-events">
+        <q-btn
+          @click="addtodo = !addtodo"
+          class="all-pointer-events"
+          color="primary "
+          round
+          icon="add"
+          size="24px"
+        >
+        </q-btn>
+      </div>
+    </div>
     <q-dialog v-model="addtodo" persistent>
       <addtask @close="addtodo = false" />
     </q-dialog>
@@ -96,4 +94,8 @@ export default {
 };
 </script>
 <style>
-</style>
+.scroll-area-tasks {
+  display: flex;
+  flex-grow: 1;
+}
+</style> 

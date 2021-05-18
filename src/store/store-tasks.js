@@ -20,6 +20,24 @@ const state = {
             duedate: '2019/06/29',
             duetime: '12:00'
         },
+        'ID4': {
+            name: 'go to shop ',
+            completed: false,
+            duedate: '2019/03/29',
+            duetime: '10:00'
+        },
+        'ID5': {
+            name: 'get bannas',
+            completed: false,
+            duedate: '2019/04/29',
+            duetime: '11:00'
+        },
+        'ID6': {
+            name: 'get Applies',
+            completed: false,
+            duedate: '2019/06/29',
+            duetime: '12:00'
+        },
     },
     search: '',
     sort: 'duedate'
