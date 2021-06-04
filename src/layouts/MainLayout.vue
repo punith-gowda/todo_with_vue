@@ -2,7 +2,16 @@
   <q-layout view="hHh lpr fFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title class="absolute-center">Vue Todo </q-toolbar-title>
+        <q-toolbar-title class="absolute-center text-bold"
+          >Vue Todo
+        </q-toolbar-title>
+        <q-btn
+          flat
+          class="absolute-right text-bold"
+          icon-right="account_circle"
+          label="Log-In"
+          to="/auth"
+        ></q-btn>
       </q-toolbar>
     </q-header>
 
