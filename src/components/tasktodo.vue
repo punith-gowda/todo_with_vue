@@ -5,7 +5,12 @@
     leave-active-class="animated absolute-top zoomOut"
   >
     <div class="bordered-task">
-      <q-banner dense inline-actions class="text-white bg-orange-5 text-center">
+      <q-banner
+        v-if="!settings.showtaskinList"
+        dense
+        inline-actions
+        class="text-white bg-orange-5 text-center"
+      >
         <span class="text-bold text-h5">Todo</span>
       </q-banner>
 
@@ -22,8 +27,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: ["taskstodos"],
+  computed: {
+    ...mapGetters("settings", ["settings"]),
+  },
   components: {
     task: require("components/task.vue").default,
   },

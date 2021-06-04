@@ -4,9 +4,10 @@
     enter-active-class="animated zoomIn"
     leave-active-class="animated zoomOut"
   >
-    <div class="bordered-task q-mt-lg">
+    <div class="bordered-task" :class="{ 'q-mt-lg': !settings.showtaskinList }">
       <q-banner
         dense
+        v-if="!settings.showtaskinList"
         inline-actions
         class="text-white bg-light-green-5 text-center"
       >
@@ -25,10 +26,14 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: ["taskscompleted"],
   components: {
     task: require("components/task.vue").default,
+  },
+  computed: {
+    ...mapGetters("settings", ["settings"]),
   },
 };
 </script>

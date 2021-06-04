@@ -13,7 +13,7 @@
       </q-item>
       <q-item tag="label" v-ripple>
         <q-item-section>
-          <q-item-label>Show Tasks in one List</q-item-label>
+          <q-item-label>Show Tasks in One List</q-item-label>
         </q-item-section>
         <q-item-section side>
           <q-toggle color="blue" v-model="showtaskinList" />
@@ -31,6 +31,7 @@ export default {
     return {};
   },
   computed: {
+    ...mapGetters("settings", ["settings"]),
     show12hrformat: {
       get() {
         return this.settings.show12hrformat;
@@ -41,14 +42,12 @@ export default {
     },
     showtaskinList: {
       get() {
-        console.log(this.settings.showtaskinList);
         return this.settings.showtaskinList;
       },
       set(value) {
         this.settaskinList(value);
       },
     },
-    ...mapGetters("settings", ["settings"]),
   },
   methods: {
     ...mapActions("settings", ["set12timeformat", "settaskinList"]),

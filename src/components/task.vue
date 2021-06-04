@@ -84,10 +84,16 @@
 <script>
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import { date } from "quasar";
 export default {
   props: ["task", "id"],
+  data() {
+    return {
+      confirmdelete: false,
+      confirmedit: false,
+    };
+  },
   components: {
     addtask: require("components/addtodotask.vue").default,
     edittask: require("components/edittask.vue").default,
@@ -124,12 +130,6 @@ export default {
       }
       return value;
     },
-  },
-  data() {
-    return {
-      confirmdelete: false,
-      confirmedit: false,
-    };
   },
 };
 </script>

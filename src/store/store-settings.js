@@ -1,3 +1,5 @@
+import { LocalStorage } from 'quasar'
+
 const state = {
   settings: {
     show12hrformat: false,
@@ -12,15 +14,30 @@ const mutations = {
   settaskinList(state, value) {
     state.settings.showtaskinList = value;
   },
+  setSettings(state, settings) {
+    Object.assign(state.settings, settings);
+  }
 };
 
 const actions = {
-  set12timeformat({ commit }, value) {
+  set12timeformat({ commit, dispatch }, value) {
     commit("set12timeformat", value);
+    dispatch('saveSettings')
+
   },
-  settaskinList({ commit }, value) {
+  settaskinList({ commit, dispatch }, value) {
     commit("settaskinList", value);
+    dispatch('saveSettings')
   },
+  saveSettings({ state }) {
+    LocalStorage.set("settings", state.settings);
+  },
+  getSettings({ commit }) {
+    let settings = LocalStorage.getItem("settings")
+    if (settings) {
+      commit('setSettings', settings)
+    }
+  }
 };
 
 const getters = {
