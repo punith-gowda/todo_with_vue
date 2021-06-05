@@ -2,15 +2,22 @@
   <q-layout view="hHh lpr fFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title class="absolute-center text-bold"
-          >Vue Todo
-        </q-toolbar-title>
+        <q-toolbar-title class="absolute-center text-bold">Vue Todo</q-toolbar-title>
         <q-btn
           flat
+          v-if="!isLoggedin"
           class="absolute-right text-bold"
           icon-right="account_circle"
           label="Log-In"
           to="/auth"
+        ></q-btn>
+        <q-btn
+          flat
+          v-else
+          @click="logOutUser"
+          class="absolute-right text-bold"
+          icon-right="account_circle"
+          label="Log-Out"
         ></q-btn>
       </q-toolbar>
     </q-header>
@@ -63,6 +70,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   name: "MainLayout",
   data() {
@@ -82,8 +90,15 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState("auth", ["isLoggedin"]),
+  },
+  methods: {
+    ...mapActions("auth", ["logOutUser"]),
+  },
 };
 </script>
+
 <style lang='scss' >
 @media screen and (min-width: 765px) {
   .q-footer {

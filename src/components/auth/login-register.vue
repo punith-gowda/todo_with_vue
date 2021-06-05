@@ -40,7 +40,7 @@
     </div>
     <div class="row">
       <q-space />
-      <q-btn type="submit" label="Register" color="primary"></q-btn>
+      <q-btn type="submit" :label="tab" color="primary"></q-btn>
     </div>
   </q-form>
 </template>

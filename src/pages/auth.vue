@@ -33,7 +33,7 @@
 export default {
   data() {
     return {
-      tab: "SignUp",
+      tab: "Login",
     };
   },
   components: {
