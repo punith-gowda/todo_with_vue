@@ -12,9 +12,7 @@
           !Object.keys(taskstodo).length
         "
         class="text-center text-bold text-h4"
-      >
-        Not Found
-      </p>
+      >Not Found</p>
 
       <q-scroll-area style="height: 90%">
         <transition
@@ -22,27 +20,16 @@
           enter-active-class="animated zoomIn"
           leave-active-class="animated absolute-top zoomOut"
         >
-          <q-banner
-            v-if="!Object.keys(taskstodo).length && !search"
-            class="bg-cyan-2"
-          >
+          <q-banner v-if="!Object.keys(taskstodo).length && !search" class="bg-cyan-2">
             <p class="text-center text-bold text-orange-6 text-h5 q-mt-lg">
-              <q-icon size="30px" name="celebration" color="red" />
-              Hurray! All Tasks Completed
+              <q-icon size="30px" name="celebration" color="red" />Hurray! All Tasks Completed
               <q-icon size="30px" name="celebration" color="red" />
             </p>
             <template v-slot:action>
-              <q-btn
-                color="orange-6"
-                @click="addtodo = !addtodo"
-                label="Add Task"
-              />
+              <q-btn color="orange-6" @click="addtodo = !addtodo" label="Add Task" />
             </template>
           </q-banner>
-          <tasktodoes
-            v-if="Object.keys(taskstodo).length"
-            :taskstodos="taskstodo"
-          />
+          <tasktodoes v-if="Object.keys(taskstodo).length" :taskstodos="taskstodo" />
         </transition>
 
         <div class="q-mb-xl">
@@ -62,8 +49,7 @@
           round
           icon="add"
           size="24px"
-        >
-        </q-btn>
+        ></q-btn>
       </div>
     </div>
     <q-dialog v-model="addtodo" persistent>
