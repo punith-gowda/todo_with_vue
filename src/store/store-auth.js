@@ -1,4 +1,4 @@
-import { LocalStorage } from 'quasar';
+import { LocalStorage, Loading } from 'quasar';
 import { firebaseAuth } from 'src/boot/firebase';
 import { showErorrMessage } from 'src/functions/function-show-errormsg'
 
@@ -14,12 +14,14 @@ const mutations = {
 
 const actions = {
     registerUser({ }, payload) {
+        Loading.show()
         firebaseAuth.createUserWithEmailAndPassword(payload.email, payload.password).then(response => {
         }).catch(err => {
             showErorrMessage(err);
         })
     },
     loginUser({ }, payload) {
+        Loading.show()
         firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password).then(response => {
         }).catch(err => {
             showErorrMessage(err);
@@ -30,6 +32,7 @@ const actions = {
     },
     handleAuthStateChange({ commit }) {
         firebaseAuth.onAuthStateChanged((user) => {
+            Loading.hide()
             if (user) {
                 commit('setLoggedin', true);
                 LocalStorage.set('isLoggedin', true)
