@@ -3,27 +3,10 @@ import { uid } from 'quasar';
 import { firebaseDB, firebaseAuth } from 'boot/firebase';
 const state = {
     tasks: {
-        // 'ID1': {
-        //     name: 'go to shop ',
-        //     completed: false,
-        //     duedate: '2019/03/29',
-        //     duetime: '10:00'
-        // },
-        // 'ID2': {
-        //     name: 'get bannas',
-        //     completed: false,
-        //     duedate: '2019/04/29',
-        //     duetime: '11:00'
-        // },
-        // 'ID3': {
-        //     name: 'get Applies',
-        //     completed: false,
-        //     duedate: '2019/06/29',
-        //     duetime: '12:00'
-        // },
     },
     search: '',
-    sort: 'duedate'
+    sort: 'duedate',
+    isFbConnected: false
 }
 
 
@@ -43,6 +26,9 @@ const mutations = {
     },
     searchfilter(state, sort) {
         state.sort = sort
+    },
+    setTasksFromFb(state, value) {
+        state.isFbConnected = value
     }
 }
 
@@ -70,6 +56,11 @@ const actions = {
     fbReadData({ commit }) {
         let user = firebaseAuth.currentUser.uid
         let userTasks = firebaseDB.ref(`tasks/${user}`)
+
+        //initial Check for data 
+        userTasks.once('value', snapshot => {
+            commit('setTasksFromFb', true)
+        })
 
         // child added tasks
         userTasks.on('child_added', snapshot => {

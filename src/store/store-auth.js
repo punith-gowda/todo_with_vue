@@ -38,6 +38,7 @@ const actions = {
                 LocalStorage.set('isLoggedin', true)
                 this.$router.push('/').catch(err => { })
             } else {
+                commit('tasks/setTasksFromFb', false, { root: true })
                 commit('setLoggedin', false);
                 LocalStorage.set('isLoggedin', false)
                 this.$router.replace('/auth').catch(err => { })
