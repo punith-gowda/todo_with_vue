@@ -18,5 +18,11 @@ quasar dev
 quasar build
 ```
 
+### Don't Forgot to Add firebase in 
+```bash
+src/boot/firebase.js
+```
+
+
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://v1.quasar.dev/quasar-cli/quasar-conf-js).
