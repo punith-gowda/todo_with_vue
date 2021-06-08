@@ -37,13 +37,14 @@ const actions = {
                 commit('setLoggedin', true);
                 LocalStorage.set('isLoggedin', true)
                 this.$router.push('/').catch(err => { })
+                dispatch('tasks/fbReadData', null, { root: true })
             } else {
+                commit('tasks/clearTasks', null, { root: true })
                 commit('tasks/setTasksFromFb', false, { root: true })
                 commit('setLoggedin', false);
                 LocalStorage.set('isLoggedin', false)
                 this.$router.replace('/auth').catch(err => { })
             }
-            dispatch('tasks/fbReadData', null, { root: true })
         });
     }
 };

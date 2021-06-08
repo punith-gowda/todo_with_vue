@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import { uid } from 'quasar';
 import { firebaseDB, firebaseAuth } from 'boot/firebase';
+import { showErorrMessage } from 'src/functions/function-show-errormsg';
 const state = {
     tasks: {
     },
@@ -20,6 +21,9 @@ const mutations = {
     },
     addtask(state, payload) {
         Vue.set(state.tasks, payload.id, payload.task)
+    },
+    clearTasks(state) {
+        state.tasks = {}
     },
     setsearch(state, search) {
         state.search = search
@@ -60,6 +64,9 @@ const actions = {
         //initial Check for data 
         userTasks.once('value', snapshot => {
             commit('setTasksFromFb', true)
+        }, err => {
+            showErorrMessage(err)
+            this.$router.replace('/auth')
         })
 
         // child added tasks
@@ -91,17 +98,29 @@ const actions = {
     fbAddtask({ }, payload) {
         let user = firebaseAuth.currentUser.uid
         let TaskRef = firebaseDB.ref(`tasks/${user}/${payload.id}`)
-        TaskRef.set(payload.task)
+        TaskRef.set(payload.task, err => {
+            if (err) {
+                showErorrMessage(err)
+            }
+        })
     },
     updateFbTasks({ }, payload) {
         let user = firebaseAuth.currentUser.uid
         let TaskRef = firebaseDB.ref(`tasks/${user}/${payload.id}`)
-        TaskRef.update(payload.updates)
+        TaskRef.update(payload.updates, err => {
+            if (err) {
+                showErorrMessage(err)
+            }
+        })
     },
     deleteFbtask({ }, TaskId) {
         let user = firebaseAuth.currentUser.uid
         let TaskRef = firebaseDB.ref(`tasks/${user}/${TaskId}`)
-        TaskRef.remove()
+        TaskRef.remove(err => {
+            if (err) {
+                showErorrMessage(err)
+            }
+        })
     }
 }
 
